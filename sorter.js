@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 var keyValue = function( obj, keyName ) {
   if( typeof obj == 'object' && obj != null && typeof keyName == 'string' ) {
     if( ( dot = keyName.indexOf('.') ) >= 0 ) {
