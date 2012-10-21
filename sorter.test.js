@@ -37,7 +37,6 @@ normalizer = new Normalizer();      normalizer.normalize([['name',-1],['age',1]]
 normalizer = new Normalizer();      normalizer.normalize({'name.first':-1,'age':1});  console.log( normalizer );
 normalizer = new Normalizer();      normalizer.normalize({'name':{'first':-1,'last':-2},'age':1,'location':{'city':{'location':2}}});           console.log( normalizer );
 
-
 var x = [ { 'name': { 'first': 'Mike', 
                       'last': 'Potra' }, 
             'age': 27, 
