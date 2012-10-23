@@ -1,6 +1,15 @@
-# sorter (v0.1)
+# sorter (v0.1.2)
 
 sorts an array of objects, based on their properties
+
+## CHANGELOG
+
+  ### v0.1.2
+    * Added converter support
+    * Converters: lc, up
+    
+    E.g. *.sort(['lc(name)',-1])* sorts by *toLowerCase( property_value )* of *name* property
+    
 
 ## FEATURES
  * Allows sorting single-value arrays

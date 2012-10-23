@@ -22,6 +22,23 @@
  * SOFTWARE.
  */
 
+var key_converters  = {
+  'lc': function(v) { return ( typeof v == 'string' ? v.toLowerCase() : v ); },
+  'uc': function(v) { return ( typeof v == 'string' ? v.toUpperCase() : v ); },
+};
+ 
+var findSpecialKey = function( name ) {
+  var res = { 'name': name, 'fn': null };
+  if( typeof name == 'string' && name != '' ) {
+    var matches = name.match(/^([A-z0-9\-\_\.]+)\(([A-z0-9\-\_\.\[\]]+)\)$/i);
+    if( matches ) {
+      res.fn    = matches[1];
+      res.name  = matches[2];
+    }
+  }
+  return res;
+}
+ 
 var keyValue = function( obj, keyName ) {
   if( typeof obj == 'object' && obj != null && typeof keyName == 'string' ) {
     if( ( dot = keyName.indexOf('.') ) >= 0 ) {
@@ -189,6 +206,7 @@ Normalizer.prototype._normalizeArray = function( args, prepend ) {
 var Sorter = function( arr, sortArray ) {
   this.map    = [];
   this.array  = arr;
+  this.converters = Object.create( key_converters );
   this.normalizer = new Normalizer();
   this.normalizer.normalize.apply( this.normalizer, sortArray );
   if( this.normalizer.keys.length ) {
@@ -206,7 +224,17 @@ Sorter.prototype._buildMap  = function( keys ) {
   for( var i = 0; i < this.array.length; i++ ) {
     var values  = [];
     for( var k = 0; k < keys.length; k++ ) {
-      values.push( keyValue( this.array[i], keys[k] ) );
+      var sk  = findSpecialKey( keys[k] );
+      if( sk.fn ) {
+        if( typeof this.converters[ sk.fn ] == 'function' ) {
+          values.push( this.converters[ sk.fn ].call( this, keyValue( this.array[i], sk.name ) ) );
+        } else {
+          values.push( keyValue( this.array[i], sk.name ) );
+        }
+      } else {
+        //key has no functions
+        values.push( keyValue( this.array[i], keys[k] ) );
+      }
     }
     this.map.push( new SortItem( i, values ) );
   }
@@ -254,3 +282,4 @@ Sorter.prototype.sort = function( noReplace ) {
 Sorter.Normalizer = Normalizer;
 
 module.exports = Sorter;
+module.exports.version  = '0.1.2';
