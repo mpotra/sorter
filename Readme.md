@@ -4,11 +4,11 @@ sorts an array of objects, based on their properties
 
 ## CHANGELOG
 
-  ### v0.1.2
-    * Added converter support
-    * Converters: lc, up
+### v0.1.2
+  * Added converter support
+  * Converters: lc, up
     
-    E.g. *.sort(['lc(name)',-1])* sorts by *toLowerCase( property_value )* of *name* property
+  E.g. *.sort(['lc(name)',-1])* sorts by *toLowerCase( property_value )* of *name* property
     
 
 ## FEATURES
