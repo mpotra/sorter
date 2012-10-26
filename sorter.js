@@ -58,7 +58,8 @@ var compare = function(a,b) {
     if( typeof a.equals == 'function' ) {
       return a.equals( b );
     } else {
-      return a.toString().localeCompare( b.toString() );
+      //return a.toString().localeCompare( b.toString() );
+      return ( a < b ? -1 : ( a == b ? 0 : 1 ) );
     }
   } else {
     return 1;
